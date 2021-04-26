@@ -1,7 +1,6 @@
 package floristeria.vistas;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -32,22 +31,21 @@ import floristeria.modelo.Floreria;
 import floristeria.modelo.Registro;
 import floristeria.modelo.Tiquet;
 
-
 public class VentanaVentas extends JPanel {
-	
+
 	private Floreria floreria;
-	private	ActualizarPrecio actualizarPrecio;
-	private double precioTotal ;
+	private ActualizarPrecio actualizarPrecio;
+	private double precioTotal;
 	private Tiquet tiquet;
 	private PanelDerecho panelDerecho;
-	private JTextField JtfPrecioTot;
-	private JTextField InPrecioArbol, InPrecioFlor, InPrecioDecoracion;
-	private JSpinner inAltura;
+	private JTextField tfPrecioTot;
+	private JTextField tfPrecioArbol, tfPrecioFlor, tfPrecioDecoracion;
+	private JSpinner spAltura;
 	private String material;
 	private double precioArbol, precioFlor, precioDecoracion;
-	
+
 	public VentanaVentas(Floreria floreria) {
-		
+
 		Font miFuente = new Font("Arial", Font.BOLD, 18);
 
 		this.floreria = floreria;
@@ -56,15 +54,15 @@ public class VentanaVentas extends JPanel {
 		actualizarPrecio = new ActualizarPrecio();
 
 		setLayout(null);
-		
-		JLabel titulo = new JLabel("VENTAS");
-		titulo.setBounds(0, 10, 900, 30);
-		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(miFuente);
-		add(titulo);
+
+		JLabel lbTitulo = new JLabel("VENTAS");
+		lbTitulo.setBounds(0, 10, 900, 30);
+		lbTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitulo.setFont(miFuente);
+		add(lbTitulo);
 
 		PanelIzquierdo panelizquierdo = new PanelIzquierdo();
-		panelizquierdo.setBounds(0, 50, 520, 470);		
+		panelizquierdo.setBounds(0, 50, 520, 470);
 
 		panelDerecho = new PanelDerecho();
 		panelDerecho.setBounds(530, 50, 300, 470);
@@ -72,29 +70,30 @@ public class VentanaVentas extends JPanel {
 		add(panelizquierdo);
 		add(panelDerecho);
 	}
-	public  void recargarPrecios() {
-		
-		precioArbol      =  buscarPrecio("arbol", inAltura.getValue().toString() ) ;
-		precioFlor       =  buscarPrecio("flor", "Rojo" );
-	    precioDecoracion =  buscarPrecio("decoracion", material );
-	    
-		InPrecioArbol.setText(   "€ "+ precioArbol ) ;
-		InPrecioFlor.setText(   "€ "+precioFlor ) ;
-		InPrecioDecoracion.setText(   "€ "+  precioDecoracion ) ;
+
+	public void recargarPrecios() {
+
+		precioArbol = buscarPrecio("arbol", spAltura.getValue().toString());
+		precioFlor = buscarPrecio("flor", "Rojo");
+		precioDecoracion = buscarPrecio("decoracion", material);
+
+		tfPrecioArbol.setText("€ " + precioArbol);
+		tfPrecioFlor.setText("€ " + precioFlor);
+		tfPrecioDecoracion.setText("€ " + precioDecoracion);
 	}
-	
+
 	class PanelIzquierdo extends JPanel {
 
 		public PanelIzquierdo() {
-			
+
 			Font miFuente = new Font("Arial", Font.BOLD, 14);
 
 			setLayout(null);
 
-			JLabel titulo = new JLabel("AÑADIR PRODUCTOS");
-			titulo.setFont(miFuente);
-			titulo.setBounds(250, 0, 200, 30);
-			add(titulo);
+			JLabel lbTitulo = new JLabel("AÑADIR PRODUCTOS");
+			lbTitulo.setFont(miFuente);
+			lbTitulo.setBounds(250, 0, 200, 30);
+			add(lbTitulo);
 
 			VentaArbol ventaArbol = new VentaArbol();
 			ventaArbol.setBounds(50, 40, 400, 130);
@@ -109,50 +108,51 @@ public class VentanaVentas extends JPanel {
 			add(ventaDecoracion);
 
 		}
-		
+
 	}
 
 	class PanelDerecho extends JPanel {
 
 		private JTable table;
 		private String[] columnas;
-		private JScrollPane scroll;
+		private JScrollPane srScroll;
 
 		public PanelDerecho() {
-			
+
 			Font miFuente = new Font("Arial", Font.BOLD, 14);
 
 			columnas = new String[] { "Tipo", "Cantidad", "Precio  " };
 
-			scroll = new JScrollPane();
+			srScroll = new JScrollPane();
 
 			setLayout(null);
-			JLabel titulo = new JLabel("TIQUET VENTA");
-			titulo.setFont(miFuente);
-			titulo.setBounds(90, 0, 100, 35);
-			add(titulo);
+			JLabel lbTitulo = new JLabel("TIQUET VENTA");
+			lbTitulo.setFont(miFuente);
+			lbTitulo.setBounds(90, 0, 100, 35);
+			add(lbTitulo);
 
-			scroll.setBounds(1, 40, 280, 300);
-			add(scroll);
+			srScroll.setBounds(1, 40, 280, 300);
+			add(srScroll);
 			cargarTabla();
 
 			JLabel lbPrecioTot = new JLabel("Precio total: ");
 			lbPrecioTot.setBounds(100, 360, 80, 30);
 			add(lbPrecioTot);
 
-			JtfPrecioTot = new JTextField("€ 0.0 ");
-			JtfPrecioTot.setBounds(180, 360, 80, 30);
-			add(JtfPrecioTot);
+			tfPrecioTot = new JTextField("€ 0.0 ");
+			tfPrecioTot.setBounds(180, 360, 80, 30);
+			add(tfPrecioTot);
 
-			JButton eliminar = new JButton("Eliminar ultimo registro");  //elimina el ultimo registro y actualiza el stock
-			eliminar.setBounds(0, 410, 170, 30);
-			eliminar.addActionListener(new EliminarRegistroUltimo());
-			add(eliminar);
-			
-			JButton generar = new JButton("Generar tiquet");
-			generar.setBounds(175, 410, 115, 30);
-			generar.addActionListener(new GenerarTiquet());
-			add(generar);
+			JButton btEliminar = new JButton("Eliminar ultimo registro"); // elimina el ultimo registro y actualiza el
+																			// stock
+			btEliminar.setBounds(0, 410, 170, 30);
+			btEliminar.addActionListener(new EliminarRegistroUltimo());
+			add(btEliminar);
+
+			JButton btGenerar = new JButton("Generar tiquet");
+			btGenerar.setBounds(175, 410, 115, 30);
+			btGenerar.addActionListener(new GenerarTiquet());
+			add(btGenerar);
 
 		}
 
@@ -163,8 +163,8 @@ public class VentanaVentas extends JPanel {
 
 			int x = 0;
 			for (Registro r : tiquet.getRegistros()) {
-				
-				switch (r.getTipo()) {  //formateo la salida segun el tipo si es Arbol, Flor o Decoracion
+
+				switch (r.getTipo()) { // formateo la salida segun el lbTipo si es Arbol, Flor o Decoracion
 
 				case "Arbol": {
 					informacion[x][0] = r.getTipo() + " de " + r.getCaracteristica() + " cm";
@@ -181,7 +181,7 @@ public class VentanaVentas extends JPanel {
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + r.getTipo());
 				}
-				
+
 				informacion[x][1] = r.getCantidad() + "";
 				informacion[x][2] = r.getPrecio() + "";
 				x++;
@@ -193,314 +193,315 @@ public class VentanaVentas extends JPanel {
 			table.getColumnModel().getColumn(1).setPreferredWidth(70);
 			table.getColumnModel().getColumn(2).setPreferredWidth(67);
 
-			scroll.setViewportView(table);
+			srScroll.setViewportView(table);
 		}
 	}
 
 	class VentaArbol extends JPanel {
-		
-		
-		JSpinner inCantidad;				
 
-		public VentaArbol() {			
-		
+		JSpinner tfCantidad;
+
+		public VentaArbol() {
+
 			setLayout(new GridLayout(5, 2, 2, 2));
-			
-			precioArbol = buscarPrecio("arbol", "40" );
 
-			JLabel tipo = new JLabel("          Tipo de producto:   ");		
-			add(tipo);
-			
-			JLabel arboles = new JLabel("Arboles");
-			arboles.setHorizontalAlignment(SwingConstants.CENTER);
-			arboles.setBackground(Color.WHITE);
-			arboles.setOpaque(true);
-			add(arboles);				
-			
-			JLabel cantidad = new JLabel("          Cantidad:   ");		
-			add(cantidad);
-			
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));	
-			add(inCantidad);
-			
-			JLabel altura = new JLabel("          Altura en cm:   ");		
+			precioArbol = buscarPrecio("arbol", "40");
+
+			JLabel lbTipo = new JLabel("          Tipo de producto:   ");
+			add(lbTipo);
+
+			JLabel lbArboles = new JLabel("Arboles");
+			lbArboles.setHorizontalAlignment(SwingConstants.CENTER);
+			lbArboles.setBackground(Color.WHITE);
+			lbArboles.setOpaque(true);
+			add(lbArboles);
+
+			JLabel lbCantidad = new JLabel("          Cantidad:   ");
+			add(lbCantidad);
+
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
+
+			JLabel altura = new JLabel("          Altura en cm:   ");
 			add(altura);
-			
-			inAltura = new JSpinner(new SpinnerNumberModel(40, 40, 200, 10));
-			add(inAltura);	
-			
-			JLabel jlPrecio = new JLabel("          Precio por unidad:   ");		
+
+			spAltura = new JSpinner(new SpinnerNumberModel(40, 40, 200, 10));
+			add(spAltura);
+
+			JLabel jlPrecio = new JLabel("          Precio por unidad:   ");
 			add(jlPrecio);
-			
-			InPrecioArbol = new JTextField(  "€ "+  precioArbol  );
-			InPrecioArbol.setEditable(false);
-			InPrecioArbol.setBackground(Color.WHITE);
-			add(InPrecioArbol);
-			
-			add(new JLabel());	   //relleno																																													
-			
-			inAltura.addChangeListener(new ChangeListener() {				
+
+			tfPrecioArbol = new JTextField("€ " + precioArbol);
+			tfPrecioArbol.setEditable(false);
+			tfPrecioArbol.setBackground(Color.WHITE);
+			add(tfPrecioArbol);
+
+			add(new JLabel()); // relleno
+
+			spAltura.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					
-					precioArbol =buscarPrecio("arbol", inAltura.getValue().toString() );
-					
-					 InPrecioArbol.setText("€ "+ precioArbol );																													
+
+					precioArbol = buscarPrecio("arbol", spAltura.getValue().toString());
+
+					tfPrecioArbol.setText("€ " + precioArbol);
 				}
-			});	
-			
+			});
+
 			JButton fillArbol = new JButton("Añadir Arbol");
-			fillArbol.addActionListener(new ActionListener() {				
+			fillArbol.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (okStock("arbol", (int) inCantidad.getValue(), inAltura.getValue().toString() )) {
-				
-						tiquet.agregarRegistro(new Registro( "Arbol" ,  inAltura.getValue()+"" ,  (int) inCantidad.getValue(), 
-								precioArbol *(int) inCantidad.getValue() ) );								
+					if (okStock("arbol", (int) tfCantidad.getValue(), spAltura.getValue().toString())) {
+
+						tiquet.agregarRegistro(new Registro("Arbol", spAltura.getValue() + "",
+								(int) tfCantidad.getValue(), precioArbol * (int) tfCantidad.getValue()));
 
 						panelDerecho.cargarTabla();
 						actualizarPrecio.actualizar();
-					}
-					else JOptionPane.showMessageDialog(null, "No hay stock suficiente del arbol de altura  " + 
-																inAltura.getValue().toString()+" cm" ,"Importante!!", JOptionPane.ERROR_MESSAGE);						
-				}				
-			});			
+					} else
+						JOptionPane.showMessageDialog(null, "No hay stock suficiente del arbol de altura  "
+								+ spAltura.getValue().toString() + " cm", "Importante!!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
 			add(fillArbol);
-		}							
+		}
 	}
-	
+
 	class VentaFlor extends JPanel {
 
-		JSpinner inCantidad;
-		
+		JSpinner tfCantidad;
+
 		String color;
-		
-		
+
 		public VentaFlor() {
 			setLayout(new GridLayout(5, 2, 2, 2));
-			
-			precioFlor = buscarPrecio( "flor","Rojo" );			
+
+			precioFlor = buscarPrecio("flor", "Rojo");
 			color = "Rojo";
 
-			JLabel tipo = new JLabel("Tipo de producto:");
-			tipo.setHorizontalAlignment(SwingConstants.RIGHT);
-			add(tipo);
-			
+			JLabel lbTipo = new JLabel("Tipo de producto:");
+			lbTipo.setHorizontalAlignment(SwingConstants.RIGHT);
+			add(lbTipo);
+
 			JLabel flores = new JLabel("Flores");
 			flores.setHorizontalAlignment(SwingConstants.CENTER);
 			flores.setBackground(Color.WHITE);
 			flores.setOpaque(true);
-			add(flores);			
+			add(flores);
 
-			JLabel cantidad = new JLabel("          Cantidad:");			
-			add(cantidad);
+			JLabel lbCantidad = new JLabel("          Cantidad:");
+			add(lbCantidad);
 
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
-			add(inCantidad);	
-			
-			JLabel jlcolor = new JLabel("          Color:");			
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
+
+			JLabel jlcolor = new JLabel("          Color:");
 			add(jlcolor);
-			
-			/*combo de eleccion ******************************/	
-			JComboBox<String> comboColor = new JComboBox<>();							
-			comboColor.addItem("Rojo");			
+
+			/* combo de eleccion ******************************/
+			JComboBox<String> comboColor = new JComboBox<>();
+			comboColor.addItem("Rojo");
 			comboColor.addItem("Blanco");
-			comboColor.addItem("Amarillo");	
+			comboColor.addItem("Amarillo");
 			comboColor.addItem("Azul");
-			
-			comboColor.addActionListener(new ActionListener() {				
+
+			comboColor.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				color =	(String)comboColor.getSelectedItem();	
-				precioFlor = buscarPrecio( "flor",color );								
-				InPrecioFlor.setText("€ "+ precioFlor );
-					
+					color = (String) comboColor.getSelectedItem();
+					precioFlor = buscarPrecio("flor", color);
+					tfPrecioFlor.setText("€ " + precioFlor);
+
 				}
-			});			
+			});
 			comboColor.setBackground(Color.WHITE);
 			comboColor.setOpaque(true);
-			add(comboColor);			
+			add(comboColor);
 
-			JLabel jlPrecio = new JLabel("          Precio por unidad:");			
+			JLabel jlPrecio = new JLabel("          Precio por unidad:");
 			add(jlPrecio);
-			
-			InPrecioFlor = new JTextField("€ "+ precioFlor);
-			InPrecioFlor.setEditable(false);
-			InPrecioFlor.setBackground(Color.WHITE);
-			add(InPrecioFlor);		
-			
-			add(new JLabel());									
-								
+
+			tfPrecioFlor = new JTextField("€ " + precioFlor);
+			tfPrecioFlor.setEditable(false);
+			tfPrecioFlor.setBackground(Color.WHITE);
+			add(tfPrecioFlor);
+
+			add(new JLabel());
+
 			JButton fillFlor = new JButton("Añadir Flor");
 			fillFlor.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (okStock("flor", (int) inCantidad.getValue(), color )) {
-						
-						tiquet.agregarRegistro(new Registro( "Flor" , color ,  (int) inCantidad.getValue(), 
-								precioFlor *(int) inCantidad.getValue() ) );
-					
+					if (okStock("flor", (int) tfCantidad.getValue(), color)) {
+
+						tiquet.agregarRegistro(new Registro("Flor", color, (int) tfCantidad.getValue(),
+								precioFlor * (int) tfCantidad.getValue()));
+
 						panelDerecho.cargarTabla();
-						
-						actualizarPrecio.actualizar();						
-					}
-					else JOptionPane.showMessageDialog(null, "No hay stock suficiente de la flor color  " + 
-																color ,"Importante!!", JOptionPane.ERROR_MESSAGE);						
-				}				
-			});			
+
+						actualizarPrecio.actualizar();
+					} else
+						JOptionPane.showMessageDialog(null, "No hay stock suficiente de la flor color  " + color,
+								"Importante!!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
 			add(fillFlor);
 		}
 	}
-	
+
 	class VentaDecoracion extends JPanel {
 
-		JSpinner inCantidad;
-		
+		JSpinner tfCantidad;
+
 		ButtonGroup grupo;
-		JRadioButton boton1, boton2;
-		
-		
+		JRadioButton btMadera, btPlastico;
 
 		public VentaDecoracion() {
 
 			setLayout(new GridLayout(5, 2, 2, 2));
-			
-			material ="Plastico";
-			
-			precioDecoracion = buscarPrecio("decoracion", "Plastico" );
 
-			JLabel tipo = new JLabel("          Tipo de producto:");			
-			add(tipo);
-			
+			material = "Plastico";
+
+			precioDecoracion = buscarPrecio("decoracion", "Plastico");
+
+			JLabel lbTipo = new JLabel("          Tipo de producto:");
+			add(lbTipo);
+
 			JLabel decoracion = new JLabel("Decoracion");
 			decoracion.setHorizontalAlignment(SwingConstants.CENTER);
 			decoracion.setBackground(Color.WHITE);
 			decoracion.setOpaque(true);
 			add(decoracion);
 
-			JLabel cantidad = new JLabel("          Cantidad:");			
-			add(cantidad);
-			
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
-			add(inCantidad);
-			
-			JLabel jlMaterial = new JLabel("          Material:");			
-			add(jlMaterial);			
-			
+			JLabel lbCantidad = new JLabel("          Cantidad:");
+			add(lbCantidad);
+
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
+
+			JLabel jlMaterial = new JLabel("          Material:");
+			add(jlMaterial);
+
 			grupo = new ButtonGroup();
 			JPanel gMaterial = new JPanel();
 			gMaterial.setBackground(Color.WHITE);
-			
-			boton1 = new JRadioButton("Madera", false);			
-			boton2 = new JRadioButton("Plastico", true);
-			grupo.add(boton1);
-			grupo.add(boton2);
-			gMaterial.add(boton1);
-			gMaterial.add(boton2);
-			add(gMaterial);	
-			
-			JLabel jlPrecio = new JLabel("          Precio por unidad:");			
+
+			btMadera = new JRadioButton("Madera", false);
+			btPlastico = new JRadioButton("Plastico", true);
+			grupo.add(btMadera);
+			grupo.add(btPlastico);
+			gMaterial.add(btMadera);
+			gMaterial.add(btPlastico);
+			add(gMaterial);
+
+			JLabel jlPrecio = new JLabel("          Precio por unidad:");
 			add(jlPrecio);
-			
-			InPrecioDecoracion = new JTextField("€ " + precioDecoracion);
-			InPrecioDecoracion.setEditable(false);
-			InPrecioDecoracion.setBackground(Color.WHITE);
-			add(InPrecioDecoracion);
-			
-			add(new JLabel());																									
-			
-			boton1.addActionListener(new ActionListener() {				
+
+			tfPrecioDecoracion = new JTextField("€ " + precioDecoracion);
+			tfPrecioDecoracion.setEditable(false);
+			tfPrecioDecoracion.setBackground(Color.WHITE);
+			add(tfPrecioDecoracion);
+
+			add(new JLabel());
+
+			btMadera.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					material = "Madera";					
-					precioDecoracion = buscarPrecio("decoracion", "Madera" );					
-					InPrecioDecoracion.setText("€ " + precioDecoracion);									
+
+					material = "Madera";
+					precioDecoracion = buscarPrecio("decoracion", "Madera");
+					tfPrecioDecoracion.setText("€ " + precioDecoracion);
 				}
 			});
-			boton2.addActionListener(new ActionListener() {				
+			btPlastico.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+
 					material = "Plastico";
-					precioDecoracion = buscarPrecio("decoracion", "Plastico" );
-					InPrecioDecoracion.setText("€ " + precioDecoracion);					
+					precioDecoracion = buscarPrecio("decoracion", "Plastico");
+					tfPrecioDecoracion.setText("€ " + precioDecoracion);
 				}
 			});
 
-			JButton fillDecoracion = new JButton("Añadir Decoracion"); 
-			fillDecoracion.addActionListener(new ActionListener() {
-				
+			JButton btAgregar = new JButton("Añadir Decoracion");
+			btAgregar.addActionListener(new ActionListener() {
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (okStock("decoracion", (int) inCantidad.getValue(), material )) {
-						
-						tiquet.agregarRegistro(new Registro( "Decoracion",  material ,  (int) inCantidad.getValue(), 
-								precioDecoracion *(int) inCantidad.getValue() ) );
+					if (okStock("decoracion", (int) tfCantidad.getValue(), material)) {
+
+						tiquet.agregarRegistro(new Registro("Decoracion", material, (int) tfCantidad.getValue(),
+								precioDecoracion * (int) tfCantidad.getValue()));
 						panelDerecho.cargarTabla();
-						actualizarPrecio.actualizar();	
-						
-					}
-					else JOptionPane.showMessageDialog(null, "No hay stock suficiente de la decoracion de  " + 
-							material ,"Importante!!", JOptionPane.ERROR_MESSAGE);						
-				}				
-			});			
-			add(fillDecoracion);									
-		}		
+						actualizarPrecio.actualizar();
+
+					} else
+						JOptionPane.showMessageDialog(null, "No hay stock suficiente de la decoracion de  " + material,
+								"Importante!!", JOptionPane.ERROR_MESSAGE);
+				}
+			});
+			add(btAgregar);
+		}
 	}
-	
+
 	private class EliminarRegistroUltimo implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {						
+		public void actionPerformed(ActionEvent e) {
 
 			if (tiquet.getRegistros().size() > 0) {
-				
-				switch (tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getTipo()) {  //formateo la salida segun el tipo si es Arbol, Flor o Decoracion
+
+				switch (tiquet.getRegistros().get(tiquet.getRegistros().size() - 1).getTipo()) { // formateo la salida
+																									// segun el lbTipo
+																									// si es Arbol, Flor
+																									// o Decoracion
 
 				case "Arbol": {
-					for (int x =0; x < floreria.getArboles().size(); x++) {
-						if ( (floreria.getArboles().get(x).getAltura() ) ==   // busco por altura
-					        ( Integer.valueOf (  tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCaracteristica() ) )  ) {
-					         floreria.getArboles().get(x).setCantidad
-					        		 (floreria.getArboles().get(x).getCantidad() + tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCantidad() ) ;
-					     }
-					        	
-					}					
+					for (int x = 0; x < floreria.getArboles().size(); x++) {
+						if ((floreria.getArboles().get(x).getAltura()) == // busco por altura
+								(Integer.valueOf(tiquet.getRegistros().get(tiquet.getRegistros().size() - 1)
+										.getCaracteristica()))) {
+							floreria.getArboles().get(x).setCantidad(floreria.getArboles().get(x).getCantidad()
+									+ tiquet.getRegistros().get(tiquet.getRegistros().size() - 1).getCantidad());
+						}
+
+					}
 					break;
 				}
 				case "Flor": {
-					for (int x =0; x < floreria.getFlores().size(); x++) {
-						if ( (floreria.getFlores().get(x).getColor() ).equals(   
-					           tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCaracteristica() ) )   {
-					         floreria.getFlores().get(x).setCantidad
-					        		 (floreria.getFlores().get(x).getCantidad() + tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCantidad() ) ;
-					     }
-					}        	
+					for (int x = 0; x < floreria.getFlores().size(); x++) {
+						if ((floreria.getFlores().get(x).getColor()).equals(
+								tiquet.getRegistros().get(tiquet.getRegistros().size() - 1).getCaracteristica())) {
+							floreria.getFlores().get(x).setCantidad(floreria.getFlores().get(x).getCantidad()
+									+ tiquet.getRegistros().get(tiquet.getRegistros().size() - 1).getCantidad());
+						}
+					}
 					break;
 				}
 				case "Decoracion": {
-					for (int x =0; x < floreria.getDecoraciones().size(); x++) {
-						if ( (floreria.getDecoraciones().get(x).getMaterial() ).equals(   
-					           tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCaracteristica() ) )   {
-					         floreria.getDecoraciones().get(x).setCantidad
-					        		 (floreria.getDecoraciones().get(x).getCantidad() + tiquet.getRegistros().get(tiquet.getRegistros().size() -1 ).getCantidad() ) ;
-					     }
-					}        	
+					for (int x = 0; x < floreria.getDecoraciones().size(); x++) {
+						if ((floreria.getDecoraciones().get(x).getMaterial()).equals(
+								tiquet.getRegistros().get(tiquet.getRegistros().size() - 1).getCaracteristica())) {
+							floreria.getDecoraciones().get(x)
+									.setCantidad(floreria.getDecoraciones().get(x).getCantidad() + tiquet.getRegistros()
+											.get(tiquet.getRegistros().size() - 1).getCantidad());
+						}
+					}
 					break;
 				}
 				default:
-					throw new IllegalArgumentException("Unexpected value: " );
-				}				
-				 tiquet.getRegistros().remove(tiquet.getRegistros().size() -1 );
-				 panelDerecho.cargarTabla();		
+					throw new IllegalArgumentException("Unexpected value: ");
+				}
+				tiquet.getRegistros().remove(tiquet.getRegistros().size() - 1);
+				panelDerecho.cargarTabla();
 			} else
 				JOptionPane.showMessageDialog(null, "NO SE PUEDE GENERAR EL TIQUET PORQUE  SE ENCUENTRA VACIO : ",
 						"Importante!!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private class GenerarTiquet implements ActionListener {
 
 		@Override
@@ -511,51 +512,50 @@ public class VentanaVentas extends JPanel {
 				floreria.agregarTiquet(tiquet);
 				tiquet = new Tiquet();
 				panelDerecho.cargarTabla();
-				JtfPrecioTot.setText("€ 0.0");
+				tfPrecioTot.setText("€ 0.0");
 
 			} else
 				JOptionPane.showMessageDialog(null, "NO SE PUEDE GENERAR EL TIQUET PORQUE  SE ENCUENTRA VACIO : ",
 						"Importante!!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
 
-	private class ActualizarPrecio {					
+	private class ActualizarPrecio {
 
 		public void actualizar() {
-			
-			precioTotal=0;
-			for(Registro r: tiquet.getRegistros()) {
+
+			precioTotal = 0;
+			for (Registro r : tiquet.getRegistros()) {
 				precioTotal += r.getPrecio();
-			}			
-			JtfPrecioTot.setText( "€ "+precioTotal);			
+			}
+			tfPrecioTot.setText("€ " + precioTotal);
 		}
 	}
 
-	private boolean okStock(String tipo, int cantidad, String caracteristica) {
+	private boolean okStock(String lbTipo, int lbCantidad, String caracteristica) {
 
-		if (tipo.equals("arbol")) {
+		if (lbTipo.equals("arbol")) {
 			for (Arbol a : floreria.getArboles()) {
-				if ((a.getAltura() == Integer.parseInt(caracteristica)) && (a.getCantidad() >= cantidad)) {
-					
-					a.setCantidad(a.getCantidad() - cantidad);
+				if ((a.getAltura() == Integer.parseInt(caracteristica)) && (a.getCantidad() >= lbCantidad)) {
+
+					a.setCantidad(a.getCantidad() - lbCantidad);
 					return true;
 				}
 			}
-		} else if (tipo.equals("flor")) {
+		} else if (lbTipo.equals("flor")) {
 			for (Flor f : floreria.getFlores()) {
-				if ((f.getColor().equals(caracteristica)) && (f.getCantidad() >= cantidad)) {
-					
-					f.setCantidad(f.getCantidad() - cantidad);
+				if ((f.getColor().equals(caracteristica)) && (f.getCantidad() >= lbCantidad)) {
+
+					f.setCantidad(f.getCantidad() - lbCantidad);
 					return true;
 				}
 			}
-		}else if (tipo.equals("decoracion")) {
+		} else if (lbTipo.equals("decoracion")) {
 			for (Decoracion d : floreria.getDecoraciones()) {
 
-				if ((d.getMaterial().equals(caracteristica)) && (d.getCantidad() >= cantidad)) {
-					
-					d.setCantidad(d.getCantidad() - cantidad);
+				if ((d.getMaterial().equals(caracteristica)) && (d.getCantidad() >= lbCantidad)) {
+
+					d.setCantidad(d.getCantidad() - lbCantidad);
 					return true;
 				}
 			}
@@ -563,19 +563,19 @@ public class VentanaVentas extends JPanel {
 		return false;
 	}
 
-	private Double buscarPrecio(String tipo, String caracteristica) {		
+	private Double buscarPrecio(String lbTipo, String caracteristica) {
 
-		if (tipo.equals("arbol")) {
+		if (lbTipo.equals("arbol")) {
 			for (Arbol a : floreria.getArboles()) {
 				if (a.getAltura() == Integer.parseInt(caracteristica))
 					return a.getPrecio();
 			}
-		} else if (tipo.equals("flor")) {
+		} else if (lbTipo.equals("flor")) {
 			for (Flor f : floreria.getFlores()) {
 				if (f.getColor().equals(caracteristica))
 					return f.getPrecio();
 			}
-		} else if (tipo.equals("decoracion")) {
+		} else if (lbTipo.equals("decoracion")) {
 			for (Decoracion d : floreria.getDecoraciones()) {
 				if (d.getMaterial().equals(caracteristica))
 					return d.getPrecio();
@@ -583,7 +583,5 @@ public class VentanaVentas extends JPanel {
 		}
 		return null;
 	}
-	
-}
 
-				
+}

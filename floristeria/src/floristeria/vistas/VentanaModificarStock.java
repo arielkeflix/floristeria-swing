@@ -25,186 +25,189 @@ import floristeria.modelo.Flor;
 import floristeria.modelo.Floreria;
 
 public class VentanaModificarStock extends JPanel {
-	
-	Floreria floreria;		
-	
+
+	Floreria floreria;
+
 	public VentanaModificarStock(Floreria floreria) {
-		
+
 		this.floreria = floreria;
-		Font miFuente = new Font("Arial", Font.BOLD, 18);		
-		
+		Font miFuente = new Font("Arial", Font.BOLD, 18);
+
 		setLayout(null);
-		
-		JLabel titulo = new JLabel("MODIFICAR STOCK");
-		titulo.setFont(miFuente);
-		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setBounds(0, 10,900, 50);
-		add(titulo);
-		
+
+		JLabel lbTitulo = new JLabel("MODIFICAR STOCK");
+		lbTitulo.setFont(miFuente);
+		lbTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitulo.setBounds(0, 10, 900, 50);
+		add(lbTitulo);
+
 		StockArbol stockArbol = new StockArbol();
-		stockArbol.setBounds(50, 70, 800, 100);		
+		stockArbol.setBounds(50, 70, 800, 100);
 		add(stockArbol);
-		
+
 		StockFlor stockFlor = new StockFlor();
 		stockFlor.setBounds(50, 170, 800, 100);
 		add(stockFlor);
-		
+
 		StockDecoracion stockDecoracion = new StockDecoracion();
-		stockDecoracion.setBounds(50,270,800, 100);
-		add(stockDecoracion);		
-		
+		stockDecoracion.setBounds(50, 270, 800, 100);
+		add(stockDecoracion);
+
 	}
-	
+
 	class StockArbol extends JPanel {
-		
-		JSpinner inAltura;
-		JSpinner inCantidad;
-		JTextField InPrecio;
+
+		JSpinner spAltura;
+		JSpinner tfCantidad;
+		JTextField tfPrecio;
 
 		public StockArbol() {
 
-			setLayout(new GridLayout(2,5, 2, 2));
+			setLayout(new GridLayout(2, 5, 2, 2));
 
-			JLabel tipo = new JLabel("Tipo de producto");
-			tipo.setHorizontalAlignment(SwingConstants.CENTER);
-			add(tipo);
-			
-			JLabel cantidad = new JLabel("Cantidad");
-			cantidad.setHorizontalAlignment(SwingConstants.CENTER);
-			add(cantidad);
-			
-			JLabel altura = new JLabel("Altura en cm");
-			altura.setHorizontalAlignment(SwingConstants.CENTER);
-			add(altura);			
-			
+			JLabel lbTipo = new JLabel("Tipo de producto");
+			lbTipo.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbTipo);
+
+			JLabel lbCantidad = new JLabel("Cantidad");
+			lbCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbCantidad);
+
+			JLabel lbAltura = new JLabel("Altura en cm");
+			lbAltura.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbAltura);
+
 			add(new JLabel(""));
 			add(new JLabel(""));
 
-			JLabel arboles = new JLabel("Arboles");
-			arboles.setHorizontalAlignment(SwingConstants.CENTER);
-			arboles.setBackground(Color.WHITE);
-			arboles.setOpaque(true);
-			add(arboles);
+			JLabel lbArboles = new JLabel("Arboles");
+			lbArboles.setHorizontalAlignment(SwingConstants.CENTER);
+			lbArboles.setBackground(Color.WHITE);
+			lbArboles.setOpaque(true);
+			add(lbArboles);
 
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));			
-			add(inCantidad);
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
 
-			inAltura = new JSpinner(new SpinnerNumberModel(40, 40, 200, 10));
-			add(inAltura);									
+			spAltura = new JSpinner(new SpinnerNumberModel(40, 40, 200, 10));
+			add(spAltura);
 
-			JButton agregar = new JButton("Agregar ");
-			agregar.addActionListener(new AgregarArbol());
-			add(agregar);
-			
-			JButton borrar = new JButton("Borrar");
-			borrar.addActionListener(new BorrarArbol());
-			add(borrar);
+			JButton btAgregar = new JButton("Agregar ");
+			btAgregar.addActionListener(new AgregarArbol());
+			add(btAgregar);
+
+			JButton btBorrar = new JButton("Borrar");
+			btBorrar.addActionListener(new BorrarArbol());
+			add(btBorrar);
 		}
-		
+
 		private class BorrarArbol implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Arbol a : floreria.getArboles()) {
 
-					if (a.getAltura() == (int) inAltura.getValue()) {						
-						if (a.getCantidad() >= (int) inCantidad.getValue()) {
-						      a.setCantidad(a.getCantidad() - (int) inCantidad.getValue());
-						
-						    JOptionPane.showMessageDialog(null, "STOCK ARBOLES MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
-						}
-						else  JOptionPane.showMessageDialog(null, "No hay stock suficiente del arbol de altura " + 
-								inAltura.getValue().toString() +" cm "+ " para borrar: " + inCantidad.getValue(),"Importante!!", JOptionPane.ERROR_MESSAGE);
+					if (a.getAltura() == (int) spAltura.getValue()) {
+						if (a.getCantidad() >= (int) tfCantidad.getValue()) {
+							a.setCantidad(a.getCantidad() - (int) tfCantidad.getValue());
+
+							JOptionPane.showMessageDialog(null, "STOCK ARBOLES MODIFICADOS ", "Importante!!",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(null,
+									"No hay stock suficiente del arbol de lbAltura " + spAltura.getValue().toString()
+											+ " cm " + " para btBorrar: " + tfCantidad.getValue(),
+									"Importante!!", JOptionPane.ERROR_MESSAGE);
 					}
-				}				
+				}
 			}
 		}
-		
+
 		private class AgregarArbol implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Arbol a : floreria.getArboles()) {
 
-					if (a.getAltura() == (int) inAltura.getValue()) {						
-						
-						a.setCantidad(a.getCantidad() + (int) inCantidad.getValue());
-						JOptionPane.showMessageDialog(null, "STOCK ARBOLES MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
+					if (a.getAltura() == (int) spAltura.getValue()) {
+
+						a.setCantidad(a.getCantidad() + (int) tfCantidad.getValue());
+						JOptionPane.showMessageDialog(null, "STOCK ARBOLES MODIFICADOS ", "Importante!!",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-				}				
+				}
 			}
 		}
 	}
 
-	class StockFlor extends JPanel {		
-		
-		JSpinner inCantidad;
-		JTextField InPrecio;		
+	class StockFlor extends JPanel {
+
+		JSpinner tfCantidad;
+		JTextField tfPrecio;
 		String color;
-		
+
 		public StockFlor() {
 
-			setLayout(new GridLayout(2,4, 2, 2));
-			
-			color = "Rojo";  //inicializo la variable para que no sea null antes de seleccionar
+			setLayout(new GridLayout(2, 4, 2, 2));
 
-			JLabel tipo = new JLabel("Tipo de producto: ");
-			tipo.setHorizontalAlignment(SwingConstants.CENTER);
-			add(tipo);
-			
-			JLabel cantidad = new JLabel("Cantidad ");
-			cantidad.setHorizontalAlignment(SwingConstants.CENTER);
-			add(cantidad);
-			
-			JLabel colores = new JLabel("Color ");
-			colores.setHorizontalAlignment(SwingConstants.CENTER);
-			add(colores);
-			
+			color = "Rojo"; // inicializo la variable para que no sea null antes de seleccionar
+
+			JLabel lbTipo = new JLabel("Tipo de producto: ");
+			lbTipo.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbTipo);
+
+			JLabel lbCantidad = new JLabel("Cantidad ");
+			lbCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbCantidad);
+
+			JLabel lbColores = new JLabel("Color ");
+			lbColores.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbColores);
+
+			add(new JLabel("")); // relleno
 			add(new JLabel(""));
-			add(new JLabel(""));
 
-			JLabel flores = new JLabel("Flores");
-			flores.setHorizontalAlignment(SwingConstants.CENTER);
-			flores.setBackground(Color.WHITE);
-			flores.setOpaque(true);
-			add(flores);
+			JLabel lbFlores = new JLabel("Flores");
+			lbFlores.setHorizontalAlignment(SwingConstants.CENTER);
+			lbFlores.setBackground(Color.WHITE);
+			lbFlores.setOpaque(true);
+			add(lbFlores);
 
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
 
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));			
-			add(inCantidad);							
-			
-			/*combo de eleccion ******************************/			
+			/* combo de eleccion ******************************/
 			JComboBox<String> comboColor = new JComboBox<>();
-			
-			comboColor.addItem("Rojo");			
+
+			comboColor.addItem("Rojo");
 			comboColor.addItem("Blanco");
-			comboColor.addItem("Amarillo");	
+			comboColor.addItem("Amarillo");
 			comboColor.addItem("Azul");
 			comboColor.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				color =	(String)comboColor.getSelectedItem();
-					
+					color = (String) comboColor.getSelectedItem();
+
 				}
-			});	
+			});
 			comboColor.setBackground(Color.WHITE);
 			comboColor.setOpaque(true);
-			
-			add(comboColor);			
-			
-			/************************************************************************************/	
 
-			JButton agregar = new JButton("Agregar ");
-			agregar.addActionListener(new AgregarFlor());
-			add(agregar);
-			
-			JButton borrar = new JButton("Borrar ");
-			borrar.addActionListener(new BorrarFlor());
-			add(borrar);
+			add(comboColor);
+
+			/************************************************************************************/
+
+			JButton btAgregar = new JButton("Agregar ");
+			btAgregar.addActionListener(new AgregarFlor());
+			add(btAgregar);
+
+			JButton btBorrar = new JButton("Borrar ");
+			btBorrar.addActionListener(new BorrarFlor());
+			add(btBorrar);
 
 		}
-		
+
 		private class BorrarFlor implements ActionListener {
 
 			@Override
@@ -213,13 +216,16 @@ public class VentanaModificarStock extends JPanel {
 				for (Flor f : floreria.getFlores()) {
 
 					if (f.getColor().equals(color)) {
-                       if (f.getCantidad() -(int) inCantidad.getValue() >= 0 ) {
-						  f.setCantidad(f.getCantidad() - (int) inCantidad.getValue());
-						  JOptionPane.showMessageDialog(null, "STOCK FLORES MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
-                       }
-                       else
-						     JOptionPane.showMessageDialog(null, "No hay stock suficiente de la flor color  " + 
-								color + " para eliminar: "  +  inCantidad.getValue(),"Importante!!", JOptionPane.ERROR_MESSAGE);	
+						if (f.getCantidad() - (int) tfCantidad.getValue() >= 0) {
+							f.setCantidad(f.getCantidad() - (int) tfCantidad.getValue());
+							JOptionPane.showMessageDialog(null, "STOCK FLORES MODIFICADOS ", "Importante!!",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane
+									.showMessageDialog(
+											null, "No hay stock suficiente de la flor color  " + color
+													+ " para eliminar: " + tfCantidad.getValue(),
+											"Importante!!", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
@@ -234,9 +240,10 @@ public class VentanaModificarStock extends JPanel {
 				for (Flor f : floreria.getFlores()) {
 
 					if (f.getColor().equals(color)) {
-                       
-						f.setCantidad(f.getCantidad() + (int) inCantidad.getValue());
-						JOptionPane.showMessageDialog(null, "STOCK FLORES MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
+
+						f.setCantidad(f.getCantidad() + (int) tfCantidad.getValue());
+						JOptionPane.showMessageDialog(null, "STOCK FLORES MODIFICADOS ", "Importante!!",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 
@@ -246,105 +253,107 @@ public class VentanaModificarStock extends JPanel {
 
 	class StockDecoracion extends JPanel {
 
-		JSpinner inCantidad;
-		JTextField InPrecio;
+		JSpinner tfCantidad;
+		JTextField tfPrecio;
 		ButtonGroup grupo;
-		JRadioButton boton1, boton2;
+		JRadioButton btMadera, btPlastico;
 
 		public StockDecoracion() {
 
 			setLayout(new GridLayout(2, 4, 2, 2));
 
-			JLabel tipo = new JLabel("Tipo de producto");
-			tipo.setHorizontalAlignment(SwingConstants.CENTER);
-			add(tipo);
+			JLabel lbTipo = new JLabel("Tipo de producto");
+			lbTipo.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbTipo);
 
-			JLabel cantidad = new JLabel("Cantidad");
-			cantidad.setHorizontalAlignment(SwingConstants.CENTER);
-			add(cantidad);
+			JLabel lbCantidad = new JLabel("Cantidad");
+			lbCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbCantidad);
 
-			JLabel material = new JLabel("Material");
-			material.setHorizontalAlignment(SwingConstants.CENTER);
-			add(material);
-			
+			JLabel lbMaterial = new JLabel("Material");
+			lbMaterial.setHorizontalAlignment(SwingConstants.CENTER);
+			add(lbMaterial);
+
+			add(new JLabel("")); // relleno
 			add(new JLabel(""));
-			add(new JLabel(""));
 
-			JLabel decoracion = new JLabel("Decoracion");
-			decoracion.setHorizontalAlignment(SwingConstants.CENTER);
-			decoracion.setBackground(Color.WHITE);
-			decoracion.setOpaque(true);			
-			add(decoracion);
+			JLabel lbDecoracion = new JLabel("Decoracion");
+			lbDecoracion.setHorizontalAlignment(SwingConstants.CENTER);
+			lbDecoracion.setBackground(Color.WHITE);
+			lbDecoracion.setOpaque(true);
+			add(lbDecoracion);
 
-			inCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
-			add(inCantidad);
+			tfCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 50, 1));
+			add(tfCantidad);
 
 			grupo = new ButtonGroup();
 			JPanel gMaterial = new JPanel();
 			gMaterial.setBackground(Color.WHITE);
-			
-			boton1 = new JRadioButton("Madera", false);
-			boton2 = new JRadioButton("Plastico", true);
-			
-			grupo.add(boton1);
-			grupo.add(boton2);
 
-			gMaterial.add(boton1);			
-			gMaterial.add(boton2);			
+			btMadera = new JRadioButton("Madera", false);
+			btPlastico = new JRadioButton("Plastico", true);
+
+			grupo.add(btMadera);
+			grupo.add(btPlastico);
+
+			gMaterial.add(btMadera);
+			gMaterial.add(btPlastico);
 
 			add(gMaterial);
 
-			JButton agregar = new JButton("Agregar ");
-			agregar.addActionListener(new AgregarDecoracion());
-			add(agregar);
-			
-			JButton borrar = new JButton("Borrar ");
-			borrar.addActionListener(new BorrarDecoracion());
-			add(borrar);
+			JButton btAgregar = new JButton("Agregar ");
+			btAgregar.addActionListener(new AgregarDecoracion());
+			add(btAgregar);
+
+			JButton btBorrar = new JButton("Borrar ");
+			btBorrar.addActionListener(new BorrarDecoracion());
+			add(btBorrar);
 		}
-		
-		private class BorrarDecoracion implements ActionListener{
+
+		private class BorrarDecoracion implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String mat = (boton1.isSelected())?boton1.getText():boton2.getText();
-				
+
+				String mat = (btMadera.isSelected()) ? btMadera.getText() : btPlastico.getText();
+
 				for (Decoracion d : floreria.getDecoraciones()) {
 
-					if (d.getMaterial().equals(mat)) {  
-						
-						if (d.getCantidad()- (int) inCantidad.getValue() >= 0 ) {
-                       
-						d.setCantidad(d.getCantidad() - (int) inCantidad.getValue());
-						JOptionPane.showMessageDialog(null, "STOCK DECORACION MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
-						}
-						else
-							JOptionPane.showMessageDialog(null, "No hay stock suficiente de la decoracion de " + 
-									d.getMaterial()+ " para borrar: "+ inCantidad.getValue() ,"Importante!!", JOptionPane.ERROR_MESSAGE);	
-					}
-				}										
-			}			
-		}		
+					if (d.getMaterial().equals(mat)) {
 
-		private class AgregarDecoracion implements ActionListener{
+						if (d.getCantidad() - (int) tfCantidad.getValue() >= 0) {
+
+							d.setCantidad(d.getCantidad() - (int) tfCantidad.getValue());
+							JOptionPane.showMessageDialog(null, "STOCK DECORACION MODIFICADOS ", "Importante!!",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(null,
+									"No hay stock suficiente de la lbDecoracion de " + d.getMaterial()
+											+ " para btBorrar: " + tfCantidad.getValue(),
+									"Importante!!", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		}
+
+		private class AgregarDecoracion implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String mat = (boton1.isSelected())?boton1.getText():boton2.getText();
-				
+
+				String mat = (btMadera.isSelected()) ? btMadera.getText() : btPlastico.getText();
+
 				for (Decoracion d : floreria.getDecoraciones()) {
 
-					if (d.getMaterial().equals(mat)) {                      
-                       
-						d.setCantidad(d.getCantidad() + (int) inCantidad.getValue());
-						JOptionPane.showMessageDialog(null, "STOCK DECORACION MODIFICADOS " ,"Importante!!", JOptionPane.INFORMATION_MESSAGE);
+					if (d.getMaterial().equals(mat)) {
+
+						d.setCantidad(d.getCantidad() + (int) tfCantidad.getValue());
+						JOptionPane.showMessageDialog(null, "STOCK DECORACION MODIFICADOS ", "Importante!!",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-				}										
-			}			
-		}		
-	}		
+				}
+			}
+		}
+	}
 
 }
-

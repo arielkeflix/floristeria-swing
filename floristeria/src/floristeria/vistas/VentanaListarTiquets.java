@@ -1,9 +1,6 @@
 package floristeria.vistas;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,109 +18,109 @@ import floristeria.modelo.Tiquet;
 public class VentanaListarTiquets extends JPanel {
 
 	private Floreria floreria;
-	private JScrollPane scroll1, scroll2, scroll3, scroll4;
-	private JLabel titTabla1, titTabla2, titTabla3, titTabla4, jlTotalVentas;
+	private JScrollPane srScroll1, srScroll2, srScroll3, srScroll4;
+	private JLabel lbTitTabla1, lbTitTabla2, lbTitTabla3, lbTitTabla4, jlTotalVentas;
 	private JLabel lbPrecioTotal1, lbPrecioTotal2, lbPrecioTotal3, lbPrecioTotal4;
-	private JButton  btnPrevios, btnProximos;
-	private int startTable =0;
-	
-	
+	private JButton btPrevios, btProximos;
+	private int startTable = 0;
+
 	public VentanaListarTiquets(Floreria floreria) {
 
 		this.floreria = floreria;
 
-		Font miFuente = new Font("Arial", Font.BOLD, 18);	
-		
+		Font miFuente = new Font("Arial", Font.BOLD, 18);
+
 		Font fuente = new Font("Arial", Font.BOLD, 16);
 
 		setLayout(null);
-		
-		jlTotalVentas = new JLabel("Total ventas: € "  );		
+
+		jlTotalVentas = new JLabel("Total ventas: € ");
 		jlTotalVentas.setFont(fuente);
 		jlTotalVentas.setBounds(10, 10, 200, 30);
 		add(jlTotalVentas);
 
-		JLabel titulo = new JLabel("LISTADO DE TIQUETS DE VENTA");		
-		
+		JLabel titulo = new JLabel("LISTADO DE TIQUETS DE VENTA");
+
 		titulo.setBounds(0, 10, 900, 30);
-		
+
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
-		titulo.setFont(miFuente);		
+		titulo.setFont(miFuente);
 
 		add(titulo);
-		
-		titTabla1 = new JLabel("tiquets nro ");
-		titTabla1.setBounds(230, 45, 150, 20);;
-		add(titTabla1);
-		
-		titTabla2 = new JLabel("tiquets nro ");
-		titTabla2.setBounds(580, 45, 150, 20);
-		add(titTabla2);
-		
-		titTabla3 = new JLabel("tiquets nro ");
-		titTabla3.setBounds(230, 280, 150, 20);
-		add(titTabla3);
-		
-		titTabla4 = new JLabel("tiquets nro ");
-		titTabla4.setBounds(580, 280, 150, 20);
-		add(titTabla4);
-		
+
+		lbTitTabla1 = new JLabel("tiquets nro ");
+		lbTitTabla1.setBounds(230, 45, 150, 20);
+		;
+		add(lbTitTabla1);
+
+		lbTitTabla2 = new JLabel("tiquets nro ");
+		lbTitTabla2.setBounds(580, 45, 150, 20);
+		add(lbTitTabla2);
+
+		lbTitTabla3 = new JLabel("tiquets nro ");
+		lbTitTabla3.setBounds(230, 280, 150, 20);
+		add(lbTitTabla3);
+
+		lbTitTabla4 = new JLabel("tiquets nro ");
+		lbTitTabla4.setBounds(580, 280, 150, 20);
+		add(lbTitTabla4);
+
 		lbPrecioTotal1 = new JLabel("precioTotal ");
 		lbPrecioTotal1.setBounds(130, 260, 150, 20);
 		add(lbPrecioTotal1);
-		
+
 		lbPrecioTotal2 = new JLabel("precioTotal ");
 		lbPrecioTotal2.setBounds(480, 260, 150, 20);
 		add(lbPrecioTotal2);
-		
+
 		lbPrecioTotal3 = new JLabel("precioTotal ");
 		lbPrecioTotal3.setBounds(130, 495, 150, 20);
 		add(lbPrecioTotal3);
-		
+
 		lbPrecioTotal4 = new JLabel("precioTotal ");
 		lbPrecioTotal4.setBounds(480, 495, 150, 20);
-		add(lbPrecioTotal4);				
+		add(lbPrecioTotal4);
 
-		scroll1 = new JScrollPane();
-		scroll1.setBounds(130, 70, 280, 180);		
-		add(scroll1);
-		
-		scroll2 = new JScrollPane();
-		scroll2.setBounds(480, 70, 280, 180);		
-		add(scroll2);
-		
-		scroll3 = new JScrollPane();
-		scroll3.setBounds(130, 310, 280, 180);		
-		add(scroll3);
-		
-		scroll4 = new JScrollPane();
-		scroll4.setBounds(480, 310, 280, 180);		
-		add(scroll4);
-		
-		btnProximos = new JButton("Proximos 4");
-		btnProximos.setBounds(775, 270, 100, 30);
-		btnProximos.addActionListener(new ActionListener() {
-			
+		srScroll1 = new JScrollPane();
+		srScroll1.setBounds(130, 70, 280, 180);
+		add(srScroll1);
+
+		srScroll2 = new JScrollPane();
+		srScroll2.setBounds(480, 70, 280, 180);
+		add(srScroll2);
+
+		srScroll3 = new JScrollPane();
+		srScroll3.setBounds(130, 310, 280, 180);
+		add(srScroll3);
+
+		srScroll4 = new JScrollPane();
+		srScroll4.setBounds(480, 310, 280, 180);
+		add(srScroll4);
+
+		btProximos = new JButton("Proximos 4");
+		btProximos.setBounds(775, 270, 100, 30);
+		btProximos.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cargarTablas(4);
-				
+
 			}
 		});
-		add(btnProximos);
-		
-		btnPrevios = new JButton(" 4 previos");
-		btnPrevios.setBounds(10, 270, 100, 30);
-		btnPrevios.addActionListener(new ActionListener() {
-			
+		add(btProximos);
+
+		btPrevios = new JButton(" 4 previos");
+		btPrevios.setBounds(10, 270, 100, 30);
+		btPrevios.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cargarTablas(-4);
-				
+
 			}
 		});
-		add(btnPrevios);
+		add(btPrevios);
 	}
 
 	public void cargarTablas(int comienzo) {
@@ -136,19 +133,19 @@ public class VentanaListarTiquets extends JPanel {
 		boolean continuar = true; // cuando llego a interar 4 tiquets paro
 		double precioTotal;
 
-		btnProximos.setEnabled(true);
-		btnPrevios.setEnabled(true);
+		btProximos.setEnabled(true);
+		btPrevios.setEnabled(true);
 
 		startTable += comienzo; // identifica si es 1era vez 'o' next '+4' o previos '-4'
 
 		if (startTable + 4 >= floreria.getTiquets().size()) { // si no hay mas de 4 para mostrar
 			startTable = floreria.getTiquets().size() - 4;
-			btnProximos.setEnabled(false);
+			btProximos.setEnabled(false);
 		}
 		if (startTable <= 0) { // si no hay previos, valido tambien que no sea negativo
 
 			startTable = 0;
-			btnPrevios.setEnabled(false);
+			btPrevios.setEnabled(false);
 		}
 
 		for (int y = startTable; continuar && y < floreria.getTiquets().size(); y++) {
@@ -193,23 +190,23 @@ public class VentanaListarTiquets extends JPanel {
 
 			switch (scrolls) {
 			case 1:
-				scroll1.setViewportView(table);
-				titTabla1.setText("Tiquet nro: " + t.getNroTiquet());
+				srScroll1.setViewportView(table);
+				lbTitTabla1.setText("Tiquet nro: " + t.getNroTiquet());
 				lbPrecioTotal1.setText("Precio total: € " + precioTotal);
 				break;
 			case 2:
-				scroll2.setViewportView(table);
-				titTabla2.setText("Tiquet nro: " + t.getNroTiquet());
+				srScroll2.setViewportView(table);
+				lbTitTabla2.setText("Tiquet nro: " + t.getNroTiquet());
 				lbPrecioTotal2.setText("Precio total: € " + precioTotal);
 				break;
 			case 3:
-				scroll3.setViewportView(table);
-				titTabla3.setText("Tiquet nro: " + t.getNroTiquet());
+				srScroll3.setViewportView(table);
+				lbTitTabla3.setText("Tiquet nro: " + t.getNroTiquet());
 				lbPrecioTotal3.setText("Precio total: € " + precioTotal);
 				break;
 			case 4:
-				scroll4.setViewportView(table);
-				titTabla4.setText("Tiquet nro: " + t.getNroTiquet());
+				srScroll4.setViewportView(table);
+				lbTitTabla4.setText("Tiquet nro: " + t.getNroTiquet());
 				lbPrecioTotal4.setText("Precio total: € " + precioTotal);
 				scrolls = 0;
 				continuar = false;
@@ -223,14 +220,14 @@ public class VentanaListarTiquets extends JPanel {
 		jlTotalVentas.setText("Total ventas: € " + calcularTotal());
 
 	}
-	
+
 	private double calcularTotal() {
-		double total = 0; 
-		for (Tiquet t: floreria.getTiquets()) {			
-			for (Registro r: t.getRegistros()) {
-				total+= r.getPrecio();				
-			}			
+		double total = 0;
+		for (Tiquet t : floreria.getTiquets()) {
+			for (Registro r : t.getRegistros()) {
+				total += r.getPrecio();
+			}
 		}
-		return total;		
+		return total;
 	}
 }
